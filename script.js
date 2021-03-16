@@ -22,6 +22,7 @@ let velocity_y = 0;
 let ballVelocity_x = -1;
 let ballVelocity_y = -1;
 
+var audio = new Audio('sound/4379__noisecollector__pongblipg5.wav');
 
 gameloop();
 
@@ -78,10 +79,12 @@ function ballMove() {
 
     if (ballX + ballSize >= enemyX && ballY <= enemyY + playerHeiht && ballY + ballSize >= enemyY) {
         ballVelocity_x = -1;
+        audio.play();
     }
 
     if (ballX <= playerX + playerWidth && ballY <= playerY + playerHeiht && ballY + ballSize >= playerY) {
         ballVelocity_x = 1;
+        audio.play();
     }
 
     if (ballY <= 0) {
