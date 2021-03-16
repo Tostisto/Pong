@@ -29,10 +29,15 @@ gameloop();
 
 function gameloop() {
     drawBackground();
+
     drawPlayer();
+    
     drawEnemy();
+    
     drawBall();
+    
     move();
+    
     ballMove();
 
     requestAnimationFrame(gameloop);
@@ -63,12 +68,12 @@ function drawBall() {
 //ball move
 function ballMove() {
 
-    if (ballX <= playerX + playerWidth && (ballY <= playerY + playerHeiht && ballY + ballSize >= playerY)) {
-        ballVelocity_x = 1;
+    if (ballX + ballSize >= enemyX && ballY <= enemyY + playerHeiht && ballY + ballSize >= enemyY) {
+        ballVelocity_x = -1;
     }
 
-    if (ballX >= canvas.width - ballSize) {
-        ballVelocity_x = -1;
+    if (ballX <= playerX + playerWidth && ballY <= playerY + playerHeiht && ballY + ballSize >= playerY) {
+        ballVelocity_x = 1;
     }
 
     if (ballY <= 0) {
@@ -79,11 +84,11 @@ function ballMove() {
         ballVelocity_y = -1;
     }
 
-
     ballX += ballSpeed * ballVelocity_x;
     ballY += ballSpeed * ballVelocity_y;
-}
 
+    enemyY = ballY;
+}
 
 
 //player move
