@@ -28,6 +28,8 @@ gameloop();
 function gameloop() {
     drawBackground();
 
+    drawCenterLine();
+
     drawPlayer();
     
     drawEnemy();
@@ -56,6 +58,14 @@ function drawEnemy() {
 
 function drawBackground() {
     drawRectangle(0, 0, canvas.width, canvas.height, "black");
+}
+
+function drawCenterLine()
+{
+    for (let i = 0; i < canvas.height; i +=70)
+    {
+        drawRectangle(canvas.width / 2 - 5, i, 10, 35, "white");
+    }
 }
 
 function drawBall() {
