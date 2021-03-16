@@ -20,8 +20,9 @@ let ballSpeed = 5;
 let speed = 10;
 
 let velocity_y = 0;
+
+let ballVelocity_x = -1;
 let ballVelocity_y = -1;
-let ballVelocity_x = 0;
 
 
 gameloop();
@@ -62,16 +63,25 @@ function drawBall() {
 //ball move
 function ballMove() {
 
-    if (ballX <= playerX + playerWidth) {
+    if (ballX <= playerX + playerWidth && (ballY <= playerY + playerHeiht && ballY + ballSize >= playerY)) {
+        ballVelocity_x = 1;
+    }
+
+    if (ballX >= canvas.width - ballSize) {
+        ballVelocity_x = -1;
+    }
+
+    if (ballY <= 0) {
         ballVelocity_y = 1;
     }
 
-    if(ballX >= enemyX - playerWidth)
-    {
+    if (ballY >= canvas.height - ballSize) {
         ballVelocity_y = -1;
     }
 
-    ballX += ballSpeed * ballVelocity_y;
+
+    ballX += ballSpeed * ballVelocity_x;
+    ballY += ballSpeed * ballVelocity_y;
 }
 
 
