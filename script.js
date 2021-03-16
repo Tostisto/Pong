@@ -10,8 +10,6 @@ let playerY = canvas.height / 2 - 30;
 let enemyX = canvas.width - playerWidth;
 let enemyY = canvas.height / 2 - 30;
 
-
-
 let ballSize = 40;
 let ballX = canvas.width / 2 - ballSize / 2;
 let ballY = canvas.height / 2 - ballSize / 2;
@@ -87,7 +85,29 @@ function ballMove() {
     ballX += ballSpeed * ballVelocity_x;
     ballY += ballSpeed * ballVelocity_y;
 
+    if (ballX <= 0 || ballX + ballSize >= canvas.width)
+    {
+        reset();
+    }
+    
     enemyY = ballY;
+}
+
+function reset()
+{
+    playerX = 0;
+    playerY = canvas.height / 2 - 30;
+
+    enemyX = canvas.width - playerWidth;
+    enemyY = canvas.height / 2 - 30;
+
+    ballX = canvas.width / 2 - ballSize / 2;
+    ballY = canvas.height / 2 - ballSize / 2;
+
+    let velocity_y = 0;
+
+    ballVelocity_x = -1;
+    ballVelocity_y = -1;
 }
 
 
