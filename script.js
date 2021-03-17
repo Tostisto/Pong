@@ -22,6 +22,9 @@ let velocity_y = 0;
 let ballVelocity_x = -1;
 let ballVelocity_y = -1;
 
+let playerScore = 0;
+let enemyScore = 0;
+
 var audio = new Audio('sound/4379__noisecollector__pongblipg5.wav');
 
 gameloop();
@@ -32,14 +35,16 @@ function gameloop() {
     drawCenterLine();
 
     drawPlayer();
-    
+
     drawEnemy();
-    
+
     drawBall();
-    
+
     move();
-    
+
     ballMove();
+
+    drawScore();
 
     requestAnimationFrame(gameloop);
 }
@@ -61,16 +66,21 @@ function drawBackground() {
     drawRectangle(0, 0, canvas.width, canvas.height, "black");
 }
 
-function drawCenterLine()
-{
-    for (let i = 0; i < canvas.height; i +=70)
-    {
+function drawCenterLine() {
+    for (let i = 0; i < canvas.height; i += 70) {
         drawRectangle(canvas.width / 2 - 5, i, 10, 35, "white");
     }
 }
 
 function drawBall() {
     drawRectangle(ballX, ballY, ballSize, ballSize, "white");
+}
+
+function drawScore() {
+
+    ctx.font = '100px Regular';
+    ctx.fillText(playerScore, canvas.width / 2 - 100, 90, 140);
+    ctx.fillText(enemyScore, canvas.width / 2 + 50, 90, 140);
 }
 
 
@@ -98,16 +108,20 @@ function ballMove() {
     ballX += ballSpeed * ballVelocity_x;
     ballY += ballSpeed * ballVelocity_y;
 
-    if (ballX <= 0 || ballX + ballSize >= canvas.width)
-    {
+    if (ballX <= 0) {
+        enemyScore++;
         reset();
     }
-    
+
+    if (ballX + ballSize >= canvas.width) {
+        playerScore++;
+        reset();
+    }
+
     enemyY = ballY;
 }
 
-function reset()
-{
+function reset() {
     playerX = 0;
     playerY = canvas.height / 2 - 30;
 
