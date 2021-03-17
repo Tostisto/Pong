@@ -68,7 +68,7 @@ function drawBackground() {
 
 function drawCenterLine() {
     for (let i = 0; i < canvas.height; i += 70) {
-        drawRectangle(canvas.width / 2 - 5, i, 10, 35, "white");
+        drawRectangle(canvas.width / 2 - 4, i, 8, 50, "white");
     }
 }
 
