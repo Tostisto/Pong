@@ -142,10 +142,12 @@ function reset() {
 function move() {
     playerY += speed * velocity_y;
 
-    if (playerY >= canvas.height - playerHeiht || playerY <= 0) {
-        velocity_y = 0;
+    if (playerY <= 0) {
+        playerY = 0;
     }
-
+    if (playerY >= canvas.height - playerHeiht) {
+        playerY = canvas.height - playerHeiht;
+    }
 }
 
 //key
