@@ -60,6 +60,7 @@ function drawPlayer() {
 
 function drawEnemy() {
     drawRectangle(enemyX, enemyY, playerWidth, playerHeiht, "white");
+    enemyY = ballY - ballSize / 2;
 }
 
 function drawBackground() {
@@ -82,7 +83,6 @@ function drawScore() {
     ctx.fillText(playerScore, canvas.width / 2 - 100, 90, 140);
     ctx.fillText(enemyScore, canvas.width / 2 + 50, 90, 140);
 }
-
 
 //ball move
 function ballMove() {
@@ -117,8 +117,6 @@ function ballMove() {
         playerScore++;
         reset();
     }
-
-    enemyY = ballY;
 }
 
 function reset() {
@@ -131,21 +129,22 @@ function reset() {
     ballX = canvas.width / 2 - ballSize / 2;
     ballY = canvas.height / 2 - ballSize / 2;
 
-    let velocity_y = 0;
+    velocity_y = 0;
 
     ballVelocity_x = -1;
     ballVelocity_y = -1;
 }
 
-
 //player move
 function move() {
     playerY += speed * velocity_y;
 
-    if (playerY >= canvas.height - playerHeiht || playerY <= 0) {
-        velocity_y = 0;
+    if (playerY <= 0) {
+        playerY = 0;
     }
-
+    if (playerY >= canvas.height - playerHeiht) {
+        playerY = canvas.height - playerHeiht;
+    }
 }
 
 //key
