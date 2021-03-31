@@ -2,28 +2,31 @@ document.addEventListener('keydown', keypush);
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
-let playerWidth = 20;
-let playerHeiht = 100;
-let playerX = 0;
-let playerY = canvas.height / 2 - 30;
+let player = {
+    width: 20,
+    height: 100,
+    x: 0,
+    y: canvas.height / 2 - 30,
+    speed: 10,
+    score: 0,
+    velocity_y: 0
+}
 
-let enemyX = canvas.width - playerWidth;
-let enemyY = canvas.height / 2 - 30;
+let enemy = {
+    x: canvas.width - player.width,
+    y: canvas.height / 2 - 30,
+    score: 0
+}
 
 let ballSize = 40;
-let ballX = canvas.width / 2 - ballSize / 2;
-let ballY = canvas.height / 2 - ballSize / 2;
-let ballSpeed = 5;
 
-let speed = 10;
-
-let velocity_y = 0;
-
-let ballVelocity_x = -1;
-let ballVelocity_y = -1;
-
-let playerScore = 0;
-let enemyScore = 0;
+let ball = {
+    x: canvas.width / 2 - ballSize / 2,
+    y: canvas.height / 2 - ballSize / 2,
+    speed: 5,
+    velocity_x: -1,
+    velocity_y: -1
+}
 
 var audio = new Audio('sound/4379__noisecollector__pongblipg5.wav');
 
@@ -55,12 +58,12 @@ function drawRectangle(x, y, width, height, color) {
 }
 
 function drawPlayer() {
-    drawRectangle(playerX, playerY, playerWidth, playerHeiht, "white");
+    drawRectangle(player.x, player.y, player.width, player.height, "white");
 }
 
 function drawEnemy() {
-    drawRectangle(enemyX, enemyY, playerWidth, playerHeiht, "white");
-    enemyY = ballY - ballSize / 2;
+    drawRectangle(enemy.x, enemy.y, player.width, player.height, "white");
+    enemy.y = ball.y - ballSize / 2;
 }
 
 function drawBackground() {
@@ -74,76 +77,76 @@ function drawCenterLine() {
 }
 
 function drawBall() {
-    drawRectangle(ballX, ballY, ballSize, ballSize, "white");
+    drawRectangle(ball.x, ball.y, ballSize, ballSize, "white");
 }
 
 function drawScore() {
 
     ctx.font = '100px Regular';
-    ctx.fillText(playerScore, canvas.width / 2 - 100, 90, 140);
-    ctx.fillText(enemyScore, canvas.width / 2 + 50, 90, 140);
+    ctx.fillText(player.score, canvas.width / 2 - 100, 90, 140);
+    ctx.fillText(enemy.score, canvas.width / 2 + 50, 90, 140);
 }
 
 //ball move
 function ballMove() {
 
-    if (ballX + ballSize >= enemyX && ballY <= enemyY + playerHeiht && ballY + ballSize >= enemyY) {
-        ballVelocity_x = -1;
+    if (ball.x + ballSize >= enemy.x && ball.y <= enemy.y + player.height && ball.y + ballSize >= enemy.y) {
+        ball.velocity_x = -1;
         audio.play();
     }
 
-    if (ballX <= playerX + playerWidth && ballY <= playerY + playerHeiht && ballY + ballSize >= playerY) {
-        ballVelocity_x = 1;
+    if (ball.x <= player.x + player.width && ball.y <= player.y + player.height && ball.y + ballSize >= player.y) {
+        ball.velocity_x = 1;
         audio.play();
     }
 
-    if (ballY <= 0) {
-        ballVelocity_y = 1;
+    if (ball.y <= 0) {
+        ball.velocity_y = 1;
     }
 
-    if (ballY >= canvas.height - ballSize) {
-        ballVelocity_y = -1;
+    if (ball.y >= canvas.height - ballSize) {
+        ball.velocity_y = -1;
     }
 
-    ballX += ballSpeed * ballVelocity_x;
-    ballY += ballSpeed * ballVelocity_y;
+    ball.x += ball.speed * ball.velocity_x;
+    ball.y += ball.speed * ball.velocity_y;
 
-    if (ballX <= 0) {
-        enemyScore++;
+    if (ball.x <= 0) {
+        enemy.score++;
         reset();
     }
 
-    if (ballX + ballSize >= canvas.width) {
-        playerScore++;
+    if (ball.x + ballSize >= canvas.width) {
+        player.score++;
         reset();
     }
 }
 
 function reset() {
-    playerX = 0;
-    playerY = canvas.height / 2 - 30;
+    player.x = 0;
+    player.y = canvas.height / 2 - 30;
 
-    enemyX = canvas.width - playerWidth;
-    enemyY = canvas.height / 2 - 30;
+    enemy.x = canvas.width - player.width;
+    enemy.y = canvas.height / 2 - 30;
 
-    ballX = canvas.width / 2 - ballSize / 2;
-    ballY = canvas.height / 2 - ballSize / 2;
+    ball.x = canvas.width / 2 - ballSize / 2;
+    ball.y = canvas.height / 2 - ballSize / 2;
 
-    velocity_y = 0;
+    player.velocity_y = 0;
 
-    ballVelocity_x = -1;
-    ballVelocity_y = -1;
+    ball.velocity_x = -1;
+    ball.velocity_y = -1;
 }
 
 //player move
 function move() {
-    playerY += speed * velocity_y;
+    player.y += player.speed * player.velocity_y;
 
-    if (playerY <= 0) {
-        playerY = 0;
+    if (player.y <= 0) {
+        player.y = 0;
     }
-    if (playerY >= canvas.height - playerHeiht) {
-        playerY = canvas.height - playerHeiht;
+    if (player.y >= canvas.height - player.height) {
+        player.y = canvas.height - player.height;
     }
 }
 
@@ -158,9 +161,9 @@ function keypush(event) {
 }
 
 function moveup() {
-    velocity_y = -1;
+    player.velocity_y = -1;
 }
 
 function movedown() {
-    velocity_y = 1;
+    player.velocity_y = 1;
 }
