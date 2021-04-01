@@ -18,15 +18,18 @@ let enemy = {
     score: 0
 }
 
-let ballSize = 40;
-
 let ball = {
-    x: canvas.width / 2 - ballSize / 2,
-    y: canvas.height / 2 - ballSize / 2,
+    size: 40,
+    x: 0,
+    y: 0,
     speed: 5,
     velocity_x: -1,
     velocity_y: -1
 }
+
+ball.x = canvas.width / 2 - ball.size / 2;
+ball.y = canvas.height / 2 - ball.size / 2;
+
 
 var audio = new Audio('sound/4379__noisecollector__pongblipg5.wav');
 
@@ -63,7 +66,7 @@ function drawPlayer() {
 
 function drawEnemy() {
     drawRectangle(enemy.x, enemy.y, player.width, player.height, "white");
-    enemy.y = ball.y - ballSize / 2;
+    enemy.y = ball.y - ball.size / 2;
 }
 
 function drawBackground() {
@@ -77,7 +80,7 @@ function drawCenterLine() {
 }
 
 function drawBall() {
-    drawRectangle(ball.x, ball.y, ballSize, ballSize, "white");
+    drawRectangle(ball.x, ball.y, ball.size, ball.size, "white");
 }
 
 function drawScore() {
@@ -90,12 +93,12 @@ function drawScore() {
 //ball move
 function ballMove() {
 
-    if (ball.x + ballSize >= enemy.x && ball.y <= enemy.y + player.height && ball.y + ballSize >= enemy.y) {
+    if (ball.x + ball.size >= enemy.x && ball.y <= enemy.y + player.height && ball.y + ball.size >= enemy.y) {
         ball.velocity_x = -1;
         audio.play();
     }
 
-    if (ball.x <= player.x + player.width && ball.y <= player.y + player.height && ball.y + ballSize >= player.y) {
+    if (ball.x <= player.x + player.width && ball.y <= player.y + player.height && ball.y + ball.size >= player.y) {
         ball.velocity_x = 1;
         audio.play();
     }
@@ -104,7 +107,7 @@ function ballMove() {
         ball.velocity_y = 1;
     }
 
-    if (ball.y >= canvas.height - ballSize) {
+    if (ball.y >= canvas.height - ball.size) {
         ball.velocity_y = -1;
     }
 
@@ -116,7 +119,7 @@ function ballMove() {
         reset();
     }
 
-    if (ball.x + ballSize >= canvas.width) {
+    if (ball.x + ball.size >= canvas.width) {
         player.score++;
         reset();
     }
@@ -129,8 +132,8 @@ function reset() {
     enemy.x = canvas.width - player.width;
     enemy.y = canvas.height / 2 - 30;
 
-    ball.x = canvas.width / 2 - ballSize / 2;
-    ball.y = canvas.height / 2 - ballSize / 2;
+    ball.x = canvas.width / 2 - ball.size / 2;
+    ball.y = canvas.height / 2 - ball.size / 2;
 
     player.velocity_y = 0;
 
