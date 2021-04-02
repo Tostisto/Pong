@@ -170,3 +170,33 @@ function moveup() {
 function movedown() {
     player.velocity_y = 1;
 }
+
+canvas.addEventListener("touchstart", startTouch, false);
+canvas.addEventListener("touchmove", moveTouch, false);
+
+var init_y = null;
+
+function startTouch(event) {
+    init_y = event.touches[0].clientY;
+};
+
+function moveTouch(event) {
+
+    if (init_y === null) {
+        return 0;
+    }
+
+    var curr_y = event.touches[0].clientY;
+    var control_y = init_y - curr_y;
+
+    if (control_y < 0) {
+        player.velocity_y = 1;
+    }
+    else {
+        player.velocity_y = -1;
+    }
+
+    init_y = null;
+
+    event.preventDefault();
+};
